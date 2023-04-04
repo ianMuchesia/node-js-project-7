@@ -6,6 +6,7 @@ const cors = require('cors')
 const connectDB = require('./database/connect')
 
 const authRoute = require('./routes/auth')
+const userRouter = require('./routes/userRoutes')
 const errorHandlerMiddleWare = require('./middleware/error-handler')
 const NotFound = require('./middleware/notFound') 
 
@@ -18,6 +19,7 @@ app.use(express.json())
 
 //routes
 app.use('/api/v1/auth', authRoute)
+app.use('/api/v1/users', userRouter)
 app.use(errorHandlerMiddleWare)
 app.use(NotFound)
 

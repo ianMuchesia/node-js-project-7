@@ -1,5 +1,6 @@
-const { BadRequestError } = require("../errors");
+const { BadRequestError, UnauthenticatedError } = require("../errors");
 const User = require("../models/User");
+const {StatusCodes} = require('http-status-codes')
 
 const register = async (req, res, next) => {
     try {
@@ -16,7 +17,7 @@ const register = async (req, res, next) => {
       const existingEmail = await User.find({ email });
   
       if (existingEmail.length > 0) {
-        throw new BadRequestError("This email already exists");
+        throw new BadRequestError("This email is already in use ");
       }
       const user = await User.create({ ...req.body });
   
@@ -25,6 +26,7 @@ const register = async (req, res, next) => {
       res.status(StatusCodes.CREATED).json({ user: { name: user.name }, token });
     } catch (error) {
       next(error);
+      console.log(error)
     }
   };
 
@@ -32,14 +34,18 @@ const login = async (req, res, next) => {
     try {
         const { email, password } = req.body;
 
-        if (!email || !password) {
-          throw new BadRequestError("please provide email and password");
+        if ( !password) {
+          throw new BadRequestError("please provide your password");
         }
       
+        if (!email ) {
+            throw new BadRequestError("please provide you email ");
+          }
+
         const user = await User.findOne({ email });
       
         if (!user) {
-          throw new UnauthenticatedError("Invalid Credentials");
+          throw new UnauthenticatedError("No account found with the above details, please check your email");
         }
       
         //compare password
