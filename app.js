@@ -1,9 +1,11 @@
 require('dotenv').config()
 require('express-async-errors')
 const express = require('express')
-
+const cors = require('cors')
 
 const connectDB = require('./database/connect')
+
+const authRoute = require('./routes/auth')
 const errorHandlerMiddleWare = require('./middleware/error-handler')
 const NotFound = require('./middleware/notFound') 
 
@@ -15,11 +17,12 @@ app.use(express.json())
 
 
 //routes
+app.use('/api/v1/auth', authRoute)
 app.use(errorHandlerMiddleWare)
 app.use(NotFound)
 
 
-const PORT = process.env.PORT || 5000
+const PORT = process.env.PORT || 3000
 
 const start = async()=>{
     try {
