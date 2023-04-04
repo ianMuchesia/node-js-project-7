@@ -5,9 +5,6 @@ const { getAllUsers,
     updateUser,
     updateUserPassword,} = require('../controllers/userController')
 
-
-
-
 const router = express.Router()
 
 router.get('/', getAllUsers)
