@@ -6,7 +6,7 @@ const {
   createOrder,
   updateOrder,
 } = require('../controllers/orderController')
-const authenticateUser = require('../middleware/authentication')
+const {authenticateUser} = require('../middleware/authentication')
 const router = express.Router()
 
 

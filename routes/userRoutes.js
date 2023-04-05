@@ -1,12 +1,23 @@
-const express = require('express')
-const { getAllUsers,
-    getSingleUser,
-    showCurrentUser,
-    updateUser,
-    updateUserPassword,} = require('../controllers/userController')
+const express = require("express");
+const {
+  getAllUsers,
+  getSingleUser,
+  showCurrentUser,
+  updateUser,
+  updateUserPassword,
+} = require("../controllers/userController");
+const {
+  authenticateUser,
+  authorizePermissions,
+} = require("../middleware/authentication");
+const router = express.Router();
 
-const router = express.Router()
+router.get("/", getAllUsers);
+router.get(
+  "/:id",
+  authenticateUser,
+  authorizePermissions("admin"),
+  getSingleUser
+);
 
-router.get('/', getAllUsers)
-
-module.exports = router
+module.exports = router;

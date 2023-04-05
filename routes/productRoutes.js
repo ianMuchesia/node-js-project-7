@@ -1,5 +1,5 @@
 const express = require('express')
-const authenticateUser = require('../middleware/authentication')
+const {authenticateUser} = require('../middleware/authentication')
 const {createProduct,
     getAllProducts,
     getSingleProduct,
