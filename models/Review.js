@@ -45,6 +45,8 @@ ReviewSchema.index({ product: 1, user: 1 }, { unique: true });
 //groups the filtered reviews by null (since we don't need to group by any other field) and calculates the average rating and total number of reviews using the $avg and $sum aggregation operators, respectively.
 
 
+//Once the aggregation is complete, the method updates the corresponding product document in the database with the calculated values using the findOneAndUpdate method from the Product model. If there is an error during the update, it is caught and logged to the console
+
 
 ReviewSchema.statics.calculateAverageRating = async function (productId) {
     const result = await this.aggregate([
