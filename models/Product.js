@@ -56,6 +56,20 @@ const ProductSchema = new Schema(
   { timestamps: true }
 );
 
+// This virtual field allows the reviews associated with a product to be accessed in a more convenient way, without having to manually search the 'Review' model for reviews with a matching product ID.
+ProductSchema.virtual('reviews', {
+  ref: 'Review',
+  localField: '_id',
+  foreignField: 'product',
+  justOne: false,
+});
+
+
+// The hook ensures that any reviews associated with the product being removed are also deleted, preventing orphaned reviews from being left in the database. This is important for data integrity and ensuring that the database stays organized and efficient.
+ProductSchema.pre('remove', async function (next) {
+  await this.model('Review').deleteMany({ product: this._id });
+});
+
 const Product = mongoose.model("Product", ProductSchema);
 
 module.exports = Product;

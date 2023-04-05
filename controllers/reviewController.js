@@ -112,15 +112,15 @@ const deleteReview = async (req, res) => {
   try {
     const { id: reviewId } = req.params;
     const { userId } = req.user;
-    const review = await findOne({ _id: reviewId });
+    const review = await Review.findOne({ _id: reviewId });
     if (!review) {
       return res
         .status(StatusCodes.NOT_FOUND)
         .json({ msg: `no review found matching id:${reviewId}` });
     }
-    // const deletedReview = await Review.remove(review);
+    const deletedReview = await Review.findOneAndDelete({_id:reviewId})
     //is more concise because it uses the built-in remove() method of Mongoose on the review object, which performs the deletion operation directly without the need for a separate call to Review.remove()
-    await review.remove();
+    //await review.remove();
     res.status(StatusCodes.OK).json({
       success: true,
     });

@@ -65,7 +65,7 @@ const deleteProduct = async (req, res) => {
   try {
     const {id:productId} = req.params
 
-    const product = await Product.findOneAndRemove({_id:productId},req.body,{new:true, runValidators:true})
+    const product = await Product.findOneAndRemove({_id:productId})
 
     if(!product){
       return res.status(StatusCodes.NOT_FOUND).json({msg:`no product found matching id:${productId}`})
