@@ -33,7 +33,7 @@ const UserSchema = new Schema({
 
 
 UserSchema.pre("save", async function (next) {
-    
+  if (!this.isModified('password')) return;
     const salt = await bcrypt.genSalt(10);
     this.password = await bcrypt.hash(this.password, salt);
     next();
@@ -46,3 +46,11 @@ UserSchema.pre("save", async function (next) {
     return isMatch;
   };
   module.exports = mongoose.model("User", UserSchema);
+
+
+
+
+
+  /* 
+  In the context of Mongoose, isModified is a method that can be called on a Mongoose document (i.e., an instance of a model) to check if a particular field or path has been modified since the document was retrieved from the database or since the last time it was saved. It returns a boolean value (true or false) indicating whether the field has been modified or not.
+  */

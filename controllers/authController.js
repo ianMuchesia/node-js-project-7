@@ -34,7 +34,7 @@ const register = async (req, res, next) => {
     attachCookiesToResponse({ res, user: tokenUser });
    
 
-    res.status(StatusCodes.CREATED).json({ user: tokenUser });
+    res.status(StatusCodes.CREATED).json({success:true, user: tokenUser });
 
   } catch (error) {
     next(error);
@@ -72,7 +72,7 @@ const login = async (req, res, next) => {
     const tokenUser = createTokenUser(user);
     attachCookiesToResponse({ res, user: tokenUser });
 
-    res.status(StatusCodes.OK).json({ user: tokenUser });
+    res.status(StatusCodes.OK).json({ success:true, user: tokenUser });
 
   } catch (error) {
     next(error);
@@ -84,7 +84,7 @@ const logout = async (req, res) => {
     httpOnly: true,
     expires: new Date(Date.now() + 1000),
   });
-  res.status(StatusCodes.OK).json({ msg: 'user logged out!' });
+  res.status(StatusCodes.OK).json({success:true, msg: 'user logged out!' });
 };
 
 module.exports = {

@@ -3,8 +3,8 @@ const {StatusCodes } = require('http-status-codes')
 
 
 const authenticateUser = async (req, res, next)=>{
-  const token  = req.signedCookies.token
-  console.log(token)
+  const token  = req.signedCookies.token//the token characters
+  
 
   if(!token){
     return res.status(StatusCodes.UNAUTHORIZED).json({msg: "Authentication Invalid"})

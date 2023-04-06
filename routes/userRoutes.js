@@ -12,11 +12,11 @@ const {
 } = require("../middleware/authentication");
 const router = express.Router();
 
-router.get("/", getAllUsers);
+router.get("/", authenticateUser, authorizePermissions("admin"), getAllUsers);
 router.get(
   "/:id",
   authenticateUser,
-  authorizePermissions("admin"),
+
   getSingleUser
 );
 
