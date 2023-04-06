@@ -33,7 +33,7 @@ const ReviewSchema = new Schema(
   },
   { timestamps: true }
 );
-
+ 
 //The index() method is a way to tell the computer to keep track of certain pieces of information in the data. The line you provided is telling the computer to create an index based on the product and user fields of the review.
 
 //The {unique: true} part means that each combination of product and user can only have one review. So if someone tries to add a review for a product that they've already reviewed, their new review will replace their old one instead of creating a duplicate.

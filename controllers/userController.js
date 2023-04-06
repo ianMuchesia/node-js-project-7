@@ -15,7 +15,7 @@ const getAllUsers = async (req, res) => {
 };
 
 const getSingleUser = async (req, res) => {
-  console.log("I am here")
+ 
   try {
     const { id: userId } = req.params;
     const user = await User.findOne({ role: "user", _id: userId }).select(
@@ -49,6 +49,7 @@ const updateUser = async (req, res) => {
     }
 
     const user = await User.findOne({ _id: req.user.userId });
+    console.log(user)
 
     user.email = email;
     user.name = name;

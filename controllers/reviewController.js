@@ -1,6 +1,8 @@
 const Product = require("../models/Product");
 const Review = require("../models/Review");
 const { StatusCodes } = require("http-status-codes");
+const { checkPermissions } = require('../utils');
+
 
 const createReview = async (req, res) => {
   try {
@@ -91,7 +93,7 @@ const updateReview = async (req, res) => {
         .json({ msg: `no review found matching id:${reviewId}` });
     }
 
-    //checkPermissions(req.user, review.user);
+    checkPermissions(req.user, review.user);
 
     review.rating = rating;
     review.title = title;
@@ -118,9 +120,10 @@ const deleteReview = async (req, res) => {
         .status(StatusCodes.NOT_FOUND)
         .json({ msg: `no review found matching id:${reviewId}` });
     }
-    const deletedReview = await Review.findOneAndDelete({_id:reviewId})
+    checkPermissions(req.user, review.user);
+   // const deletedReview = await Review.findOneAndDelete({_id:reviewId})
     //is more concise because it uses the built-in remove() method of Mongoose on the review object, which performs the deletion operation directly without the need for a separate call to Review.remove()
-    //await review.remove();
+    await review.remove();
     res.status(StatusCodes.OK).json({
       success: true,
     });
